@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+@model IEnumerable<RecipeBox.Models.Recipe>;
+
+<h1>@User.Identity.Name's Recipes</h1>
+
+@if (@Model.Any())
+{
+  <ul>
+    @foreach (Recipe recipe in Model)
+    {
+      <li>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</li>
+    }
+  </ul>
+}
+else
+{
+  <div class="text-center">
+    <h3>No recipes have been added yet!</h3>
+    <p>Click below to create one.</p>
+  </div>
+}
+
+@Html.ActionLink("Add Recipe", "Create", new { }, new { @class = "btn btn-primary"})
+@Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "btn btn-primary"})
