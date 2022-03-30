@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+@model IEnumerable<RecipeBox.Models.Category>;
+
+<h1>Categories</h1>
+
+@if (@Model.Any())
+{
+  <ul>
+    @foreach (Category category in Model)
+    {
+      <li>@Html.ActionLink($"{category.Name}", "Details", new { id = category.CategoryId })</li>
+    }
+  </ul>
+}
+else
+{
+  <div class="text-center">
+    <h3>No categories have been added yet!</h3>
+    <p>Click below to create one.</p>
+  </div>
+}
+
+@Html.ActionLink("Add Category", "Create", new { }, new { @class = "btn btn-primary"})
+@Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "btn btn-primary"})
