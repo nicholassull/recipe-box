@@ -20,7 +20,7 @@ else
   @foreach(var join in Model.JoinEntities)
   {
     <li>@join.Recipe.Name</li>
-    @using (Html.BeginForm("DeleteRecipe", "Ingredients"))
+    @using (Html.BeginForm("DeleteRecipe", "Categories"))
     {
       @Html.Hidden("joinId", @join.CategoryRecipeId)
       <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
@@ -30,5 +30,5 @@ else
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Ingredient", "Edit", new { id = Model.CategoryId })</p>
-<p>@Html.ActionLink("Delete Ingredient", "Delete", new { id = Model.CategoryId })</p>
+<p>@Html.ActionLink("Edit Category", "Edit", new { id = Model.CategoryId })</p>
+<p>@Html.ActionLink("Delete Category", "Delete", new { id = Model.CategoryId })</p>

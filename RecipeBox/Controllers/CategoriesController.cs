@@ -76,7 +76,10 @@ namespace RecipeBox.Controllers
     public ActionResult DeleteRecipe(int joinId)
     {
       ViewBag.PageTitle = "Delete Recipe from Category";
-      var joinEntry = _db.
+      var joinEntry = _db.CategoryRecipes.FirstOrDefault(entry => entry.CategoryRecipeId == joinId);
+      _db.CategoryRecipes.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
   }

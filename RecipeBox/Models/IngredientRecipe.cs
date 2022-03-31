@@ -8,5 +8,6 @@ namespace RecipeBox.Models
     public string Quantity { get; set; }
     public virtual Ingredient Ingredient { get; set; }
     public virtual Recipe Recipe { get; set; }
+    public virtual ApplicationUser User { get; set; }
   }
 }

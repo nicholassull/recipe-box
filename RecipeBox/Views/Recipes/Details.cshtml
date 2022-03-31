@@ -20,7 +20,7 @@ else
   @foreach(var join in Model.JoinCategoryRecipes)
   {
     <li>@join.Category.Name</li>
-    @using (Html.BeginForm("DeleteCategory", "Items"))
+    @using (Html.BeginForm("DeleteCategory", "Recipes"))
     {
       @Html.Hidden("joinId", @join.CategoryRecipeId)
       <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
@@ -42,7 +42,7 @@ else
   @foreach(var join in Model.JoinIngredientRecipes)
   {
     <li>@join.Quantity - @join.Ingredient.Name </li>
-    @using (Html.BeginForm("DeleteIngredient", "Ingredients"))
+    @using (Html.BeginForm("DeleteIngredient", "Recipes"))
     {
       @Html.Hidden("joinId", @join.IngredientRecipeId)
       <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
@@ -55,3 +55,4 @@ else
 <p>@Html.ActionLink("Edit Recipe", "Edit", new { id = Model.RecipeId })</p>
 <p>@Html.ActionLink("Delete Recipe", "Delete", new { id = Model.RecipeId })</p>
 <p>@Html.ActionLink("Add a Category", "AddCategory", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Add an Ingredient", "AddIngredient", new { id = Model.RecipeId })</p>

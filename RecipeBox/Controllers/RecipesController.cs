@@ -87,7 +87,8 @@ namespace RecipeBox.Controllers
 
     public ActionResult AddCategory(int id)
     {
-      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
+      var thisRecipe = _db.Recipes
+      .FirstOrDefault(recipe => recipe.RecipeId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories,"CategoryId", "Name");
       return View(thisRecipe);
     }    
@@ -103,19 +104,26 @@ namespace RecipeBox.Controllers
       return RedirectToAction("Index");
     }    
 
-    public ActionResult AddIngredient(int id)
+    public async Task<ActionResult> AddIngredient(int id)
     {
-      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var thisRecipe = _db.Recipes
+      .Include(recipe => recipe.JoinIngredientRecipes)
+      .FirstOrDefault(recipe => recipe.RecipeId == id);
+      
       ViewBag.IngredientId = new SelectList(_db.Ingredients,"IngredientId", "Name");
       return View(thisRecipe);
     }    
 
     [HttpPost]
-    public ActionResult AddIngredient(Recipe recipe, int IngredientId, string Quantity)
+    public async Task<ActionResult> AddIngredient(Recipe recipe, int IngredientId, string Quantity)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
       if (IngredientId != 0)
       {
-        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Quantity = Quantity });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Quantity = Quantity, User = currentUser });
         _db.SaveChanges();
       }
       return RedirectToAction("Index");
@@ -141,6 +149,14 @@ namespace RecipeBox.Controllers
     {
       var joinEntry = _db.CategoryRecipes.FirstOrDefault(entry => entry.CategoryRecipeId == joinId);
       _db.CategoryRecipes.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+    [HttpPost]
+    public ActionResult DeleteIngredient(int joinId)
+    {
+      var joinEntry = _db.IngredientRecipes.FirstOrDefault(entry => entry.IngredientRecipeId == joinId);
+      _db.IngredientRecipes.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
