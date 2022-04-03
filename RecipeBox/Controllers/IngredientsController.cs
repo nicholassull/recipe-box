@@ -29,9 +29,11 @@ namespace RecipeBox.Controllers
       return View(model);
     }
 
-    public ActionResult Create()
+    public async Task<ActionResult> Create()
     {
-      ViewBag.RecipeId = new SelectList(_db.Recipes, "RecipeId", "Name");
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
       return View();
     }
 
@@ -72,7 +74,7 @@ namespace RecipeBox.Controllers
     public ActionResult Edit(int id)
     {
       var thisIngredient = _db.Ingredients.FirstOrDefault(ingredient => ingredient.IngredientId == id);
-      ViewBag.RecipeId = new SelectList(_db.Recipes, "RecipeId", "Name");
+      // ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
       return View(thisIngredient);
     }
 

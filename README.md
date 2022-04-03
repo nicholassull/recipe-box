@@ -1,3 +1,3 @@
 ## Database Structure
 
-![Database Structure Image](/wwwroot/img/DatabaseImage.jpg)
+![Database Structure Image](../wwwroot/img/DatabaseImage.jpg)
