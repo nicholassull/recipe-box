@@ -30,7 +30,7 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).OrderBy(recipe => recipe.Name).ToList();
+      var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).OrderByDescending(recipe => recipe.Rating).ThenBy(recipe => recipe.Name).ToList();
       return View(userRecipes);
     }
     
@@ -123,7 +123,7 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      bool duplicate = _db.IngredientRecipes.Any(join => join.IngredientId == IngredientId && join.IngredientId == recipe.RecipeId);
+      bool duplicate = _db.IngredientRecipes.Any(join => join.IngredientId == IngredientId && join.RecipeId == recipe.RecipeId);
 
       if (IngredientId != 0 && !duplicate)
       {

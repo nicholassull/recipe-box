@@ -7,15 +7,17 @@
 <h2>Add a category</h2>
 
 <h4>Add a category to this recipe: @Html.DisplayFor(model => model.Name)</h4>
+<div class="w-50">
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.RecipeId)
 
-@using (Html.BeginForm())
-{
-  @Html.HiddenFor(model => model.RecipeId)
+    <div class="form-group">
+        @Html.Label("Select Category")
+        @Html.DropDownList("CategoryId", ViewBag.CategoryId, "Select Category", new { @class = "form-control"})
+    </div>
 
-  @Html.Label("Select a category")
-  @Html.DropDownList("CategoryId")
-
-  <input type="submit" value="Save" class="btn btn-info btn-sm" />
-}
-
+    <input type="submit" value="Save" class="btn btn-info btn-sm m-3" />
+  }
+</div>
 <p>@Html.ActionLink("Back to list", "Index")</p>

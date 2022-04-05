@@ -7,6 +7,7 @@
 <h2>Recipe Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h4>@Html.DisplayNameFor(model => model.Rating): @Html.DisplayFor(model => model.Rating)</h4>
 
 @if(@Model.JoinCategoryRecipes.Count == 0)
 {
@@ -18,12 +19,15 @@ else
 
 <div class="categories">
   @foreach(var join in Model.JoinCategoryRecipes)
-  {
-      <span class="badge bg-secondary float-left">@join.Category.Name</span>
+  {   
       @using (Html.BeginForm("DeleteCategory", "Recipes")) 
       {
+        <button type="submit" class="btn btn-danger btn-sm" value="Delete">
+          Delete
+        </button>
         @Html.Hidden("joinId", @join.CategoryRecipeId)
-        <input type="submit" value="Delete"class="btn btn-info btn-sm float-left pull-right"/>
+        <span class="badge bg-secondary float-left">@join.Category.Name</span>
+        <br>
       }
   }
 </div>
@@ -36,7 +40,6 @@ else
 else
 {
   <h4>Recipe Ingredients:</h4>
-
         @foreach (var join in Model.JoinIngredientRecipes)
         {
          
@@ -51,6 +54,9 @@ else
             </p>
           }
         }
+
+  <h4>Instructions:</h4>
+  <p> @Model.Instructions</p>
 
 
 <!-- @*<ul>

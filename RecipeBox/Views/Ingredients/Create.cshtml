@@ -21,10 +21,9 @@
     {
       @if (ViewBag.SuccessMessage != "Not a duplicate")
       {
-        @* Console.WriteLine(ViewBag.SuccessMessage); *@
           <text>
           <script>
-            alert('This ingredient has already been added!');
+            alert('This ingredient already exists!');
           </script>
         </text>
       }

@@ -55,7 +55,7 @@ namespace RecipeBox.Controllers
         // Return view since using ViewBag cannot use RedirectToAction
         return View();
       }
-      else
+      else  // new ingredient
       {
         ViewBag.SuccessMessage = "Not Duplicate";
         _db.Ingredients.Add(ingredient);

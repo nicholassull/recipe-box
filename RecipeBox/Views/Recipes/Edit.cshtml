@@ -16,6 +16,12 @@
   @Html.Label("Select Category")
   @Html.DropDownList("CategoryId")
 
+  @Html.LabelFor(model => model.Instructions)
+  @Html.TextBoxFor(model => model.Instructions)
+
+  @Html.LabelFor(model => model.Rating)
+  @Html.TextBoxFor(model => model.Rating)
+
   <input type="submit" value="Save" class="btn btn-info" />
 }
 <p>@Html.ActionLink("Show all recipes", "Index")</p>
