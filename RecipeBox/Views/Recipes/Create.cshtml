@@ -8,11 +8,14 @@
 
 @using (Html.BeginForm())
 {
-  @Html.LabelFor(model => model.Name)
-  @Html.TextBoxFor(model => model.Name)
-
-  @Html.Label("Select Category")
-  @Html.DropDownList("CategoryId")
+  <div class="form-group">
+    @Html.LabelFor(model => model.Name)
+    @Html.TextBoxFor(model => model.Name, new { @class ="form-control"})
+  </div>
+  <div class="form-group">
+    @Html.Label("Select Category")
+    @Html.DropDownList("CategoryId")
+  </div>
 
   <input type="submit" value="Add new recipe" class="btn btn-info" />
 }

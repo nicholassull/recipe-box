@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 
 namespace RecipeBox.Controllers
@@ -29,7 +30,7 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).ToList();
+      var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).OrderBy(recipe => recipe.Name).ToList();
       return View(userRecipes);
     }
     
@@ -106,6 +107,7 @@ namespace RecipeBox.Controllers
 
     public async Task<ActionResult> AddIngredient(int id)
     {
+
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisRecipe = _db.Recipes
@@ -121,7 +123,9 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      if (IngredientId != 0)
+      bool duplicate = _db.IngredientRecipes.Any(join => join.IngredientId == IngredientId && join.IngredientId == recipe.RecipeId);
+
+      if (IngredientId != 0 && !duplicate)
       {
         _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Quantity = Quantity, User = currentUser });
         _db.SaveChanges();

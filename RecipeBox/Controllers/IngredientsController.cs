@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System;
+using System.Web;
+using System.Net;
+
 
 namespace RecipeBox.Controllers
 {
@@ -25,7 +28,7 @@ namespace RecipeBox.Controllers
 
     public ActionResult Index()
     {
-      List<Ingredient> model = _db.Ingredients.ToList();
+      List<Ingredient> model = _db.Ingredients.OrderBy(ingredient => ingredient.Name).ToList();
       return View(model);
     }
 
@@ -41,16 +44,28 @@ namespace RecipeBox.Controllers
     public async Task<ActionResult> Create(Ingredient ingredient, int RecipeId)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var currentUser = await _userManager.FindByIdAsync(userId);
+      var currentUser = await _userManager.FindByIdAsync(userId);   
+      bool duplicateIngredient = await _db.Ingredients.AnyAsync(theIngredient => theIngredient.Name == ingredient.Name);
       
-      _db.Ingredients.Add(ingredient);
-      _db.SaveChanges();
-      bool duplicate = _db.IngredientRecipes.Any(join => join.RecipeId == RecipeId && join.IngredientId == ingredient.IngredientId);
-      if (RecipeId !=0 && !duplicate)
+      if (duplicateIngredient)
+      {
+        
+        ViewBag.SuccessMessage = "This Ingredient already exists";
+        ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
+        // Return view since using ViewBag cannot use RedirectToAction
+        return View();
+      }
+      else
+      {
+        ViewBag.SuccessMessage = "Not Duplicate";
+        _db.Ingredients.Add(ingredient);
+        _db.SaveChanges();
+      }
+      if (RecipeId != 0)
       {
         _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId, User = currentUser});
+        _db.SaveChanges();
       }
-      _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
@@ -63,18 +78,13 @@ namespace RecipeBox.Controllers
         .Include(ingredient => ingredient.JoinEntities)
         .ThenInclude(join => join.Recipe)
         .FirstOrDefault(ingredient => ingredient.IngredientId == id);
-      // var thisIngredientForUser = _db.IngredientRecipes.Where(entry => entry.User.Id == currentUser.Id);
-      // var thisIngredientForUser = _db.IngredientRecipes.Where(thisIngredient.JoinEntities.Contains() == currentUser.Id);
       ViewBag.UsersIngredients = _db.IngredientRecipes.Where(entry => entry.User.Id == currentUser.Id && entry.IngredientId == id).ToList();
       return View(thisIngredient);
     }
 
-// var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).ToList();
-
     public ActionResult Edit(int id)
     {
       var thisIngredient = _db.Ingredients.FirstOrDefault(ingredient => ingredient.IngredientId == id);
-      // ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
       return View(thisIngredient);
     }
 
@@ -92,6 +102,9 @@ namespace RecipeBox.Controllers
         _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId, User = currentUser});
       }
       _db.SaveChanges();
+      //if IngredientRecipe.UserId != currentUser
+      //return JavaScript(alert("Sorry you can't edit this ingredient"));
+      //else
       return RedirectToAction("Index");
     }
 

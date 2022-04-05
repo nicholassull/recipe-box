@@ -5,7 +5,6 @@
 @model RecipeBox.Models.Recipe
 
 <h2>Add an Ingredient</h2>
-<!-- <h2>@Model.JoinIngredientRecipes.Count()</h2> -->
 
 <h4>Add an ingredient to this recipe: @Html.DisplayFor(model => model.Name)</h4>
 
@@ -13,17 +12,15 @@
 {
   @Html.HiddenFor(model => model.RecipeId)
 
-  @Html.LabelFor(model => model.JoinIngredientRecipes.ElementAt(0).Quantity)
-  @Html.TextBoxFor(model => model.JoinIngredientRecipes.ElementAt(0).Quantity)
-  
-
-  
-  
   @Html.Label("Select ingredient")
   @Html.DropDownList("IngredientId")
+
+  @Html.Label("Quantity")
+  //Identifies the input value as 'Quantity', which is passed into the AddIngredient route meathod.
+  @Html.TextBox("Quantity")
   
   <input type="submit" value="Save" class="btn btn-info btn-sm"/>
-
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
+

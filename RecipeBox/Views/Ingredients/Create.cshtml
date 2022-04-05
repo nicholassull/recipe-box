@@ -14,6 +14,20 @@
   @Html.Label("Select Recipe")
   @Html.DropDownList("RecipeId", "Add to Recipe")
 
+  <input type="hidden" value="@ViewBag.SuccessMessage" name="SuccessMessage"/>
   <input type="submit" value="Add new ingredient" class="btn btn-info" />
+
+    @if (ViewBag.SuccessMessage !=null)
+    {
+      @if (ViewBag.SuccessMessage != "Not a duplicate")
+      {
+        @* Console.WriteLine(ViewBag.SuccessMessage); *@
+          <text>
+          <script>
+            alert('This ingredient has already been added!');
+          </script>
+        </text>
+      }
+    }
 }
 <p>@Html.ActionLink("Show all ingredients", "Index")</p>
