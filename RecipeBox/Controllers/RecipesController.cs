@@ -77,7 +77,8 @@ namespace RecipeBox.Controllers
     [HttpPost]
     public ActionResult Edit(Recipe recipe, int CategoryId)
     {
-      if (CategoryId !=0)
+      bool duplicate = _db.CategoryRecipes.Any(join => join.CategoryId == CategoryId && join.RecipeId == recipe.RecipeId);
+      if (CategoryId !=0 && !duplicate)
       {
         _db.CategoryRecipes.Add(new CategoryRecipe() {CategoryId = CategoryId, RecipeId = recipe.RecipeId});
       }
@@ -97,7 +98,8 @@ namespace RecipeBox.Controllers
     [HttpPost]
     public ActionResult AddCategory(Recipe recipe, int CategoryId)
     {
-      if (CategoryId != 0)
+      bool duplicate = _db.CategoryRecipes.Any(join => join.CategoryId == CategoryId && join.RecipeId == recipe.RecipeId);
+      if (CategoryId !=0 && !duplicate)
       {
         _db.CategoryRecipes.Add(new CategoryRecipe() { CategoryId = CategoryId, RecipeId = recipe.RecipeId });
         _db.SaveChanges();
@@ -125,10 +127,20 @@ namespace RecipeBox.Controllers
       var currentUser = await _userManager.FindByIdAsync(userId);
       bool duplicate = _db.IngredientRecipes.Any(join => join.IngredientId == IngredientId && join.RecipeId == recipe.RecipeId);
 
-      if (IngredientId != 0 && !duplicate)
-      {
-        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Quantity = Quantity, User = currentUser });
-        _db.SaveChanges();
+      if (IngredientId != 0)
+      {      
+        if (duplicate)
+        {
+          ViewBag.SuccessMessage = "This Ingredient has already been added";
+          ViewBag.IngredientId = new SelectList(_db.Ingredients,"IngredientId", "Name");
+          return View();
+        }
+        else
+        {
+          ViewBag.SuccessMessage = "Not Duplicate";
+          _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Quantity = Quantity, User = currentUser });
+          _db.SaveChanges();
+        }
       }
       return RedirectToAction("Index");
     }    

@@ -17,9 +17,9 @@ else
 {
   <h4>Categories the Recipe belongs to:</h4>
 
-<div class="categories">
   @foreach(var join in Model.JoinCategoryRecipes)
   {   
+    <br>
       @using (Html.BeginForm("DeleteCategory", "Recipes")) 
       {
         <button type="submit" class="btn btn-danger btn-sm" value="Delete">
@@ -27,12 +27,10 @@ else
         </button>
         @Html.Hidden("joinId", @join.CategoryRecipeId)
         <span class="badge bg-secondary float-left">@join.Category.Name</span>
-        <br>
       }
   }
-</div>
 }
-
+<br>
 @if(@Model.JoinIngredientRecipes.Count == 0)
 {
   <p>This recipe does not have any ingredients!</p>
@@ -42,7 +40,6 @@ else
   <h4>Recipe Ingredients:</h4>
         @foreach (var join in Model.JoinIngredientRecipes)
         {
-         
           @using (Html.BeginForm("DeleteIngredient", "Recipes"))
           {
             <p>
@@ -57,19 +54,6 @@ else
 
   <h4>Instructions:</h4>
   <p> @Model.Instructions</p>
-
-
-<!-- @*<ul>
-  @foreach(var join in Model.JoinIngredientRecipes)
-  {
-    <li>@join.Quantity - @join.Ingredient.Name </li>
-    @using (Html.BeginForm("DeleteIngredient", "Recipes"))
-    {
-      @Html.Hidden("joinId", @join.IngredientRecipeId)
-      <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
-    }
-  }
-  </ul> *@  -->
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>

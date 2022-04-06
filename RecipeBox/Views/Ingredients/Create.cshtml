@@ -5,28 +5,32 @@
 @model RecipeBox.Models.Ingredient
 
 <h4>Add a new ingredient</h4>
+<div class="w-50">
+  @using (Html.BeginForm())
+  {
+    <div class="form-group">
+      @Html.LabelFor(model => model.Name)
+      @Html.TextBoxFor(model => model.Name, new { @class="form-control", placeholder="Name", required="required" })
+    </div>
+    <div class="form-group">
+      @Html.Label("Select Recipe")
+      @Html.DropDownList("RecipeId", ViewBag.RecipeId, "Select Recipe", new { @class = "form-control"})
+    </div>
+    <br>
 
-@using (Html.BeginForm())
+    @* <input type="hidden" value="@ViewBag.SuccessMessage" name="SuccessMessage"/> *@
+    <input type="submit" value="Add new ingredient" class="btn btn-info" />
+  }
+</div>
+@if (ViewBag.SuccessMessage !=null)
 {
-  @Html.LabelFor(model => model.Name)
-  @Html.TextBoxFor(model => model.Name)
-
-  @Html.Label("Select Recipe")
-  @Html.DropDownList("RecipeId", "Add to Recipe")
-
-  <input type="hidden" value="@ViewBag.SuccessMessage" name="SuccessMessage"/>
-  <input type="submit" value="Add new ingredient" class="btn btn-info" />
-
-    @if (ViewBag.SuccessMessage !=null)
-    {
-      @if (ViewBag.SuccessMessage != "Not a duplicate")
-      {
-          <text>
-          <script>
-            alert('This ingredient already exists!');
-          </script>
-        </text>
-      }
-    }
+  @if (ViewBag.SuccessMessage != "Not a duplicate")
+  {
+    <text>
+      <script>
+        alert('This ingredient already exists!');
+      </script>
+    </text>
+  }
 }
 <p>@Html.ActionLink("Show all ingredients", "Index")</p>

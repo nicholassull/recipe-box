@@ -45,26 +45,28 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);   
-      bool duplicateIngredient = await _db.Ingredients.AnyAsync(theIngredient => theIngredient.Name == ingredient.Name);
-      
-      if (duplicateIngredient)
+      bool duplicateIngredient = _db.Ingredients.Any(theIngredient => theIngredient.Name == ingredient.Name);
+
+      if (ingredient.Name != null)
       {
-        
-        ViewBag.SuccessMessage = "This Ingredient already exists";
-        ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
-        // Return view since using ViewBag cannot use RedirectToAction
-        return View();
-      }
-      else  // new ingredient
-      {
-        ViewBag.SuccessMessage = "Not Duplicate";
-        _db.Ingredients.Add(ingredient);
-        _db.SaveChanges();
-      }
-      if (RecipeId != 0)
-      {
-        _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId, User = currentUser});
-        _db.SaveChanges();
+        if (duplicateIngredient)
+        {
+          ViewBag.SuccessMessage = "This Ingredient already exists";
+          ViewBag.RecipeId = new SelectList(_db.Recipes.Where(user => user.User == currentUser), "RecipeId", "Name");
+          // Return view since using ViewBag cannot use RedirectToAction
+          return View();
+        }
+        else  // new ingredient
+        {
+          ViewBag.SuccessMessage = "Not Duplicate";
+          _db.Ingredients.Add(ingredient);
+          _db.SaveChanges();
+        }
+        if (RecipeId != 0)
+        {
+          _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId, User = currentUser});
+          _db.SaveChanges();
+        }
       }
       return RedirectToAction("Index");
     }
