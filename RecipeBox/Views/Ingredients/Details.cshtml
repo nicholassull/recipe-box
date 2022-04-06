@@ -8,9 +8,9 @@
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.JoinEntities.Count == 0)
+@if(@ViewBag.UsersIngredients.Count == 0)
 {
-  <p>No recipes use this ingredient.</p>
+  <p>None of your recipes use this ingredient.</p>
 }
 else
 {
@@ -42,6 +42,6 @@ else
   }
 }
 
-<p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Ingredient", "Edit", new { id = Model.IngredientId })</p>
-<p>@Html.ActionLink("Delete Ingredient", "Delete", new { id = Model.IngredientId })</p>
+@Html.ActionLink("Back to list", "Index", new {}, new { @class = "btn btn-primary"})
+@Html.ActionLink("Edit Ingredient", "Edit", new { id = Model.IngredientId }, new { @class = "btn btn-primary"})
+@Html.ActionLink("Delete Ingredient", "Delete", new { id = Model.IngredientId }, new { @class = "btn btn-primary"})

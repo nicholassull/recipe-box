@@ -11,10 +11,12 @@
 
 @if (@Model.Any())
 {
-  <ul>
+  <ul class="list-group">
     @foreach (Recipe recipe in Model)
     {
-      <li>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId }) | Rating: @recipe.Rating</li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId }) 
+      <span class="badge bg-primary rounded-pill"> @recipe.Rating </span>
+      </li>
     }
   </ul>
 }
@@ -25,6 +27,6 @@ else
     <p>Click below to create one.</p>
   </div>
 }
-
+<br>
 @Html.ActionLink("Add Recipe", "Create", new { }, new { @class = "btn btn-primary"})
 @Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "btn btn-primary"})

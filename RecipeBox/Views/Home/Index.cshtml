@@ -4,9 +4,16 @@
 
 <div class="text-center">
     <h1>Welcome to Recipe Box!</h1>
+    <p>A place to record and share your favorite recipes.</p>
 </div>
-
-@Html.ActionLink("View Recipes", "Index", "Recipes", new { }, new { @class = "btn btn-primary"})
-@Html.ActionLink("View Ingredients", "Index", "Ingredients", new { }, new { @class = "btn btn-primary"})
-@Html.ActionLink("View Categories", "Index", "Categories", new { }, new { @class = "btn btn-primary"})
-@Html.ActionLink("Sign Up", "Register", "Account", new { }, new { @class = "btn btn-success"})
+<br>
+<div id="home-image" class="text-center">
+  <img src='/RecipeBox/wwwroot/img/bento.jpg' class="rounded mx-auto" alt="two bento boxes">
+</div>
+@* <div class="text-center">
+  @Html.ActionLink("View Recipes", "Index", "Recipes", new { }, new { @class = "btn btn-primary"})
+  @Html.ActionLink("View Ingredients", "Index", "Ingredients", new { }, new { @class = "btn btn-primary"})
+  @Html.ActionLink("View Categories", "Index", "Categories", new { }, new { @class = "btn btn-primary"})
+  @Html.ActionLink("Sign Up", "Register", "Account", new { }, new { @class = "btn btn-success"})
+  @Html.ActionLink("Account Info", "Index", "Account", new { }, new { @class = "btn btn-success"})
+</div> *@

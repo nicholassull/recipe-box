@@ -10,10 +10,11 @@
   {
     <div class="form-group">
       @Html.LabelFor(model => model.Name)
-      @Html.TextBoxFor(model => model.Name, new { @class="form-control"})
+      @Html.TextBoxFor(model => model.Name, new { @class="form-control", placeholder="Name", required="required" })
     </div>
     <input type="submit" value="Add Category" class="btn btn-info btn-sm m-3" />
   }
 </div>
 
-<p>@Html.ActionLink("Show all categories", "Index")</p>
+
+@Html.ActionLink("Back to Categories", "Index", new { }, new { @class = "btn btn-primary"})

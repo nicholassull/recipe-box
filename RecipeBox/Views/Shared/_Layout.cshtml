@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - RecipeBox</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/RecipeBox.Solution.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RecipeBox.wwwroot.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -19,11 +19,29 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item px-1">
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
+                            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-success"})
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item px-1">
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                            @Html.ActionLink("Recipes", "Index", "Recipes", null, new { @class = "btn btn-success"})
+                        </li>
+                        <li class="nav-item px-1">
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                            @Html.ActionLink("Ingredients", "Index", "Ingredients", null, new { @class = "btn btn-success"})
+                        </li>
+                        <li class="nav-item px-1">
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                            @Html.ActionLink("Categories", "Index", "Categories", null, new { @class = "btn btn-success"})
+                        </li>
+                        <li class="nav-item px-1">
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                            @Html.ActionLink("Sign Up", "Register", "Account", new { }, new { @class = "btn btn-success"})
+                        </li>
+                        <li class="nav-item px-1">
+                             @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                            @Html.ActionLink("Account Info", "Index", "Account", new { }, new { @class = "btn btn-success"})
                         </li>
                     </ul>
                 </div>

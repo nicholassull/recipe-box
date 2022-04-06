@@ -19,7 +19,7 @@
     <br>
 
     @* <input type="hidden" value="@ViewBag.SuccessMessage" name="SuccessMessage"/> *@
-    <input type="submit" value="Add new ingredient" class="btn btn-info" />
+    <input type="submit" value="Add New Ingredient" class="btn btn-info" />
   }
 </div>
 @if (ViewBag.SuccessMessage !=null)
@@ -33,4 +33,5 @@
     </text>
   }
 }
-<p>@Html.ActionLink("Show all ingredients", "Index")</p>
+<br>
+@Html.ActionLink("Back to Ingredients", "Index", new { }, new { @class = "btn btn-primary"})
