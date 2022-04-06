@@ -104,9 +104,6 @@ namespace RecipeBox.Controllers
         _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId, User = currentUser});
       }
       _db.SaveChanges();
-      //if IngredientRecipe.UserId != currentUser
-      //return JavaScript(alert("Sorry you can't edit this ingredient"));
-      //else
       return RedirectToAction("Index");
     }
 

@@ -16,18 +16,6 @@ else
 {
   <h4>Recipes that use this ingredient:</h4>
 
-  @*<!-- <ul>
-  @foreach(var join in Model.JoinEntities)
-  {
-    <li>@join.Recipe.Name - @join.Quantity</li>
-    @using (Html.BeginForm("DeleteRecipe", "Ingredients"))
-    {
-      @Html.Hidden("joinId", @join.IngredientRecipeId)
-      <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
-    }
-  }
-  </ul> --> *@
-
   @foreach(var entry in ViewBag.UsersIngredients)
   {
     int joinId = entry.IngredientRecipeId;
@@ -35,7 +23,6 @@ else
     <li>@entry.Recipe.Name - @entry.Quantity</li>
     @using (Html.BeginForm("DeleteRecipe", "Ingredients"))
     {
-     @* <!-- @Html.Hidden("joinId", value => @entry.Ingredient.IngredientId) --> *@
       @Html.Hidden("joinId", joinId)
       <input type="submit" value="Delete"class="btn btn-info btn-sm"/>
     }

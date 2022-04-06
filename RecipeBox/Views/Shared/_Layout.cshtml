@@ -20,27 +20,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item px-1">
-                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
                             @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-success"})
                         </li>
                         <li class="nav-item px-1">
-                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                             @Html.ActionLink("Recipes", "Index", "Recipes", null, new { @class = "btn btn-success"})
                         </li>
                         <li class="nav-item px-1">
-                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                             @Html.ActionLink("Ingredients", "Index", "Ingredients", null, new { @class = "btn btn-success"})
                         </li>
                         <li class="nav-item px-1">
-                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                             @Html.ActionLink("Categories", "Index", "Categories", null, new { @class = "btn btn-success"})
                         </li>
                         <li class="nav-item px-1">
-                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                             @Html.ActionLink("Sign Up", "Register", "Account", new { }, new { @class = "btn btn-success"})
                         </li>
                         <li class="nav-item px-1">
-                             @* <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                             @Html.ActionLink("Account Info", "Index", "Account", new { }, new { @class = "btn btn-success"})
                         </li>
                     </ul>
@@ -56,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - RecipeBox - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - RecipeBox
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
